@@ -1,0 +1,39 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="lookup" />
+  <button (click)="addAlias()">Add Alias</button>
+  <div formArrayName="aliases">
+    <h3>Aliases</h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>In</th>
+          <th>Out</th>
+        </tr>
+        <tr *ngFor="let alias of aliases.controls; let i = index">
+          <td [formGroupName]="i">
+            <input [readonly]="i == 0" type="text" formControlName="name" />
+          </td>
+          <td [formGroupName]="i">
+            <input
+              [readonly]="i == 0"
+              (input)="onInChange()"
+              type="number"
+              formControlName="in"
+            />
+          </td>
+          <td [formGroupName]="i">
+            <input
+              [readonly]="i == 0"
+              (input)="onOutChange()"
+              type="number"
+              formControlName="out"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
